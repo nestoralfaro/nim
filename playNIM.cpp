@@ -7,11 +7,11 @@
 #include <iostream>
 #include <string>
 
-void initializeBoard(char board[10])
+//String that comes thru
+void initializeBoard(char boardDetails)
 {
-	char initBoard[10] = { '0','1','2','3','4','5','6','7','8','9' };
-	for (int i = 0; i < 10; i++)
-		board[i] = initBoard[i];
+	cout << str.at(5);
+	int board [];
 }
 
 void updateBoard(char board[10], int move, int player)
@@ -26,16 +26,30 @@ void updateBoard(char board[10], int move, int player)
 		std::cout << "Problem with updateBoard function!" << std::endl;
 }
 
-void displayBoard(char board[10])
+void NumberOfSticksInRowI(int i) {
+	return sticks[HOWEVER YOU GET IT];
+}
+
+void displayBoard(int NumberOfRows)
 {
 	std::cout << std::endl;
-	std::cout << board[1] << " | " << board[2] << " | " << board[3] << std::endl;
-	std::cout << "__+___+__" << std::endl;
-	std::cout << board[4] << " | " << board[5] << " | " << board[6] << std::endl;
-	std::cout << "__+___+__" << std::endl;
-	std::cout << board[7] << " | " << board[8] << " | " << board[9] << std::endl;
+	//Load the number of rows out
+	for (int i = 0; i <= NumberOfRows; i++) {
+  		//Load row
+		std::cout << "Row " << i << ": ";
+		
+		for (int i = 0; i <= NumberOfSticksInRowI(i) ; i++) {
+			//Number of sticks in the row
+			cout << " | ";
+		}
+
+		std::cout << std::endl;
+	}
+
 	std::cout << std::endl;
 }
+
+
 
 int check4Win(char board[10])
 {
