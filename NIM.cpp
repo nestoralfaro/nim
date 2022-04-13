@@ -1,6 +1,6 @@
 // NIM.cpp
 
-// This program plays Tic-Tac-Toe with other computers across the network using the UDP protocol.
+// This program plays NIM with other computers across the network using the UDP protocol.
 
 #include "NIM.h"
 #include <iostream>
@@ -21,6 +21,12 @@ int main(int argc, char* argv[])
 	std::string playerName;
 	std::cout << "What is your name? ";
 	std::getline(std::cin, playerName);
+	
+	while (playerName.length() > 80) {
+		std::cout << "Name must be 80 characters max" << std::endl;
+		std::cout << "What is your name? ";
+		std::getline(std::cin, playerName);
+	}
 
 	std::string choice_str;
 	char newline;
@@ -29,7 +35,7 @@ int main(int argc, char* argv[])
 	do {
 		std::cout << std::endl << std::endl << std::endl;
 		std::cout << "Choose an option:" << std::endl;
-		std::cout << "   1 - Host a game of Tic-Tac-Toe" << std::endl;
+		std::cout << "   1 - Host a game of Nim" << std::endl;
 		std::cout << "   2 - Challenge someone else" << std::endl;
 		std::cout << "   3 - Quit" << std::endl;
 		std::cout << "Enter 1, 2 or 3: ";
