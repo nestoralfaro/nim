@@ -6,7 +6,7 @@
 #include <WinSock2.h>
 #include <string>
 
-static char NIM_UDPPORT[] = "28900";	// Port number used by NIM servers
+static char NIM_UDPPORT[] = "29333";	// Port number used by NIM servers
 
 #define NIM_QUERY  "Who?"
 #define NIM_NAME	 "Name="
