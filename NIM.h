@@ -1,12 +1,12 @@
 #pragma once
-// TicTacToe.h
+// Nim.h
 //
 // This header file establishes some constants that should be used
-// in the TicTacToe project for COMP 3110
+// in the NIM project for COMP 3110
 #include <WinSock2.h>
 #include <string>
 
-static char TicTacToe_UDPPORT[] = "28900";	// Port number used by TicTacToe servers
+static char NIM_UDPPORT[] = "28900";	// Port number used by NIM servers
 
 #define TicTacToe_QUERY  "Who?"
 #define TicTacToe_NAME	 "Name="
@@ -22,8 +22,6 @@ const int noWinner = 0;
 const int xWinner = 1;
 const int oWinner = 2;
 const int TIE = 3;
-
-static char board[10];
 
 struct ServerStruct {
 	std::string name;
@@ -41,5 +39,5 @@ char* GetBroadcastAddress();
 int server_main(int, char* [], std::string);
 int client_main(int, char* [], std::string);
 void getServers(SOCKET, char*, char*, ServerStruct[], int&);
-int playTicTacToe(SOCKET, std::string, std::string, std::string, int);
+int playNIM(SOCKET, std::string, std::string, std::string, int);
 
