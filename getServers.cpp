@@ -1,4 +1,4 @@
-#include "TicTacToe.h"
+#include "NIM.h"
 #include <WinSock2.h>
 #include <iostream>
 #include <string>
@@ -28,12 +28,12 @@ void getServers(SOCKET s, char* broadcastAddress, char* broadcastPort, ServerStr
 
 	numServers = 0;
 
-	// Send TicTacToe_QUERY to broadcastAddress using broadcastPort
+	// Send NIM_QUERY to broadcastAddress using broadcastPort
 /*****
-	Task 3: Add code here that will send the TicTacToe_QUERY message to the broadcastAddress
+	Task 3: Add code here that will send the NIM_QUERY message to the broadcastAddress
 			using the broadcastPort (see function header)
 *****/
-	UDP_send(s, (char*)TicTacToe_QUERY, strlen(TicTacToe_QUERY), broadcastAddress, broadcastPort);
+	UDP_send(s, (char*)NIM_QUERY, strlen(NIM_QUERY), broadcastAddress, broadcastPort);
 
 	char buf[MAX_SEND_BUF];
 	// Receive incoming UDP datagrams (with a maximum of 2 second wait before each recv() function call)
