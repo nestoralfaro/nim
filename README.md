@@ -4,6 +4,7 @@
 - Nestor Alfaro
 - Brendan Burke
 - Joel Hoppe
+
 Order of Operations:
 
 Client:
