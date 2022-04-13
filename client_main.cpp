@@ -18,7 +18,7 @@ int client_main(int argc, char* argv[], std::string playerName)
 	// Find all NIM servers
 	std::cout << std::endl << "Looking for NIM servers ... " << std::endl;
 	int numServers;
-	getServers(s, GetBroadcastAddress(), TicTacToe_UDPPORT, server, numServers);
+	getServers(s, GetBroadcastAddress(), NIM_UDPPORT, server, numServers);
 
 	if (numServers == 0) {
 		std::cout << std::endl << "Sorry.  No NIM servers were found.  Try again later." << std::endl << std::endl;
