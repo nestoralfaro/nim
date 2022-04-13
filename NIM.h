@@ -1,5 +1,5 @@
 #pragma once
-// Nim.h
+// NIM.h
 //
 // This header file establishes some constants that should be used
 // in the NIM project for COMP 3110
@@ -8,9 +8,9 @@
 
 static char NIM_UDPPORT[] = "28900";	// Port number used by NIM servers
 
-#define TicTacToe_QUERY  "Who?"
-#define TicTacToe_NAME	 "Name="
-#define TicTacToe_CHALLENGE "Player="
+#define NIM_QUERY  "Who?"
+#define NIM_NAME	 "Name="
+#define NIM_CHALLENGE "Player="
 
 const int MAX_SEND_BUF = 2048;
 const int MAX_RECV_BUF = 2048;
