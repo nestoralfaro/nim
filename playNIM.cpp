@@ -6,6 +6,24 @@
 #include <iostream>
 #include <string>
 
+//Convert two chars to a single int 
+int convertToNum(char Uno, char Dos) {
+	int integ = (Uno - '0') * 10 + (Dos - '0');
+	return integ;
+}
+
+//Validate Request Data coming in
+int ValidateData(amountToRemove) {
+	if (NimBoard1.rows[Pile] < amountToRemove) {
+		amountToRemove = NimBoard1.rows[Pile];
+	}
+	if (NimBoard1.rows[Pile] < 1) {
+		amountToRemove = 1;
+	}
+
+	return amountToRemove;
+}
+
 //String that comes thru
 void initializeBoard(char boardDetails)
 {
@@ -13,16 +31,11 @@ void initializeBoard(char boardDetails)
 	int board [];
 }
 
-void updateBoard(char board[10], int move, int player)
+//Update with the values of the board
+void updateBoard(int Pile, int amountToRemove)
 {
-	if (player == X_PLAYER) {
-		board[move] = 'X';
-	}
-	else if (player == O_PLAYER) {
-		board[move] = 'O';
-	}
-	else
-		std::cout << "Problem with updateBoard function!" << std::endl;
+	amountToRemove = ValidateData(amountToRemove);
+	NimBoard1.rows[Pile] = NimBoard1.rows[Pile] - 1;
 }
 
 void NumberOfSticksInRowI(int i) {
