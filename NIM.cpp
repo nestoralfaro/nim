@@ -49,7 +49,35 @@ int main(int argc, char* argv[])
 		default: std::cout << std::endl << "Please enter a digit between 1 and 3." << std::endl;
 		}
 	} while (choice != QUIT);
-
+/*INITIALIZING GAME BOARD, NEEDS EDITS TO FIT WITH SYNTAX
+Int PileNumber = 0;
+Cout << "Please input how many piles you'd like to play from 3 to 9."
+While (PileNumber > 9 || PileNumber < 3){
+CIN >> PileNumber;
+If (PileNumber > 9 || PileNumber < 3){
+Cout << "Invalid input, please input a number from 3 to 9";
+}
+}
+For (I=0, I<PileNumber, I++){
+Int 
+String Suffix = "";
+If (PileNumber == 1){
+Suffix = "st";
+}
+Elseif (PileNumber == 2){
+Suffix = "nd";
+}
+Elseif (PileNumber == 3) {
+Suffix = "rd";
+}
+Else {
+Suffix = "th"
+}
+While (pile[I] < 0 || Pile[I] > 20){
+COUT << "How many rocks will be in the " << I + 1 << Suffix << " pile?";
+CIN << pile[I]
+}
+}*/
 	WSACleanup();
 }
 
