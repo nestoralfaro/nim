@@ -101,15 +101,18 @@ int getMove(char board[10], int player)
 	int move;
 	char move_str[80];
 
-	std::cout << "Where do you want to place your ";
-	char mark = (player == X_PLAYER) ? 'X' : 'O';
+	std::cout << "You are playing as the";
+										//	X		O
+	char mark = (player == X_PLAYER) ? 'server' : 'client';
 	std::cout << mark << "? " << std::endl;
 
 	do {
 		std::cout << "Your move? ";
 		std::cin >> move_str;
 		move = atoi(move_str);
-		if (board[move] == 'X' || board[move] == 'O') move = 0;
+		//if pile has no rocks
+		//if (board[move + 1] == 0) move = 0;
+		//if (board[move] == 'X' || board[move] == 'O') move = 0;
 	} while (move < 1 || move > 9);
 
 	return move;
