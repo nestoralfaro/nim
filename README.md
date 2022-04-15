@@ -24,3 +24,13 @@ Client:
   setsockopt(s, SOL_SOCKET, SO_BROADCAST, (char*)&bOptVal, sizeof(BOOL));
 
 Server:
+- Obtain <=80 character name from user input to send in response to broadcast queries
+- Create UDP type socket bound to port #29333 
+- If server receives datagram "WHO?" reply by sending "Player=[User input name]" to client's IP address and Port# (Do not Broadcast)
+- If you receive "Player=[Client Name]" you have been challenged.
+- Reply "NO" or "YES"
+- If "NO" continue listening for traffic on port #29333
+- If "YES" wait 2 seconds for a reply "GREAT!" If not received resume listening on #29333
+
+Game:
+- 
