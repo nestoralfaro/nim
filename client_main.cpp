@@ -14,6 +14,9 @@ int client_main(int argc, char* argv[], std::string playerName)
 	char* _host = NULL;
 
 	SOCKET s = connectsock(_host, NIM_UDPPORT, protocol);		// Create a socket  (host and port not used here for UDP)
+	//Added to resolve "Problem with sendto function call within UDP_send(). Error Code = 10013."
+	bool bOptVal = true;
+	setsockopt(s, SOL_SOCKET, SO_BROADCAST, (char*)&bOptVal, sizeof(bool));
 
 	// Find all NIM servers
 	std::cout << std::endl << "Looking for NIM servers ... " << std::endl;
