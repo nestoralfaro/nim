@@ -33,4 +33,4 @@ Server:
 - If "YES" wait 2 seconds for a reply "GREAT!" If not received resume listening on #29333
 
 Game:
-- 
+- Client has first move. Server specifies rock piles
