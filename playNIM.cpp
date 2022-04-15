@@ -9,9 +9,13 @@
 //String that comes thru
 void initializeBoard(char boardDetails)
 {
-	cout << str.at(5);
-	int board [];
+	char rowInfo = boardDetails.charAt(0);
+	//Minus 1 because we are going to shift one right and ignore it (row count)
+	for (int i = 0; i <= boardDetails.length() - 1; i++) {
+		NimBoard1.rowCount[i] = boardDetails.charAt(i + 1);
+	}
 }
+//Done J.A. (Untested)
 
 void updateBoard(char board[10], int move, int player)
 {
@@ -26,8 +30,9 @@ void updateBoard(char board[10], int move, int player)
 }
 
 void NumberOfSticksInRowI(int i) {
-	return sticks[HOWEVER YOU GET IT];
+	return NimBoard1.rowCount[i];
 }
+//Done J.A. (Untested)
 
 void displayBoard(int NumberOfRows)
 {
@@ -37,7 +42,7 @@ void displayBoard(int NumberOfRows)
   		//Load row
 		std::cout << "Row " << i << ": ";
 		
-		for (int i = 0; i <= NumberOfSticksInRowI(i) ; i++) {
+		for (int i = 0; i <= NumberOfSticksInRowI(i); i++) {
 			//Number of sticks in the row
 			cout << " | ";
 		}
@@ -47,7 +52,7 @@ void displayBoard(int NumberOfRows)
 
 	std::cout << std::endl;
 }
-
+//Done J.A. (Untested)
 
 
 int check4Win(char board[10])

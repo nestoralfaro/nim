@@ -29,6 +29,11 @@ struct ServerStruct {
 	std::string port;
 };
 
+struct NimBoard {
+	int rowCount;
+	int boardRows[rowCount];
+}NimBoard1;
+
 SOCKET connectsock(char*, char*, char*);
 SOCKET passivesock(char*, char*);
 int UDP_recv(SOCKET, char*, int, char*, char*);
