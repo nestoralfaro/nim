@@ -32,7 +32,7 @@ struct ServerStruct {
 struct NimBoard {
 	int rowCount;
 	int boardRows[rowCount];
-}NimBoard1;
+}
 
 SOCKET connectsock(char*, char*, char*);
 SOCKET passivesock(char*, char*);
