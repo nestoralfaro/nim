@@ -19,8 +19,8 @@ const int Serv_PLAYER = 1;
 const int Client_PLAYER = 2;
 const int ABORT = -1;
 const int noWinner = 0;
-const int xWinner = 1;
-const int oWinner = 2;
+const int ServWinner = 1;
+const int ClientWinner = 2;
 const int TIE = 3;
 
 struct ServerStruct {
