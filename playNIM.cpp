@@ -13,7 +13,7 @@ int convertToNum(char Uno, char Dos) {
 }
 
 //Validate Request Data coming in
-int ValidateData(NimBoard board, int amountToRemove, int pileNum) {
+int ValidateData(NimBoard board, int amountToRemove, int pileNum, int player) {
 	int winner = noWinner;
 
 	if (board.boardRows[pileNum] < amountToRemove) {
@@ -34,10 +34,10 @@ void initializeBoard(char boardDetails)
 }
 
 //Update with the values of the board
-int updateBoard(NimBoard board, int Pile, int amountToRemove)
+int updateBoard(NimBoard board, int Pile, int amountToRemove, int player)
 {
 	int winner = noWinner;
-	winner = ValidateData(board, amountToRemove, Pile);
+	winner = ValidateData(board, amountToRemove, Pile, player);
 	board.boardRows[Pile] = board.boardRows[Pile] - amountToRemove;
 	return winner;
 }
@@ -166,7 +166,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 			// Get my move & display board
 			move = getMove(board, player);
 			std::cout << "Board after your move:" << std::endl;
-			winner = updateBoard(board, move, player);
+			winner = updateBoard(board, move, player); // Not yet compatible with the updateBoard funciton
 			displayBoard(board);
 
 			// Send move to opponent
@@ -198,7 +198,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 				pileNum = move / 100;
 
 
-				winner = updateBoard(board, pileNum, rockNum);
+				winner = updateBoard(board, pileNum, rockNum, player);
 
 				/*****
 							(iii) call a function that will display the updated board on your screen
