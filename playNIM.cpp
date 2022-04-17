@@ -6,6 +6,24 @@
 #include <iostream>
 #include <string>
 
+//Convert two chars to a single int 
+int convertToNum(char Uno, char Dos) {
+	int integ = (Uno - '0') * 10 + (Dos - '0');
+	return integ;
+}
+
+//Validate Request Data coming in
+int ValidateData(amountToRemove) {
+	if (NimBoard1.rows[Pile] < amountToRemove) {
+		amountToRemove = NimBoard1.rows[Pile];
+	}
+	if (NimBoard1.rows[Pile] < 1) {
+		amountToRemove = 1;
+	}
+
+	return amountToRemove;
+}
+
 //String that comes thru
 void initializeBoard(char boardDetails)
 {
@@ -17,16 +35,11 @@ void initializeBoard(char boardDetails)
 }
 //Done J.A. (Untested)
 
-void updateBoard(char board[10], int move, int player)
+//Update with the values of the board
+void updateBoard(int Pile, int amountToRemove)
 {
-	if (player == X_PLAYER) {
-		board[move] = 'X';
-	}
-	else if (player == O_PLAYER) {
-		board[move] = 'O';
-	}
-	else
-		std::cout << "Problem with updateBoard function!" << std::endl;
+	amountToRemove = ValidateData(amountToRemove);
+	NimBoard1.rows[Pile] = NimBoard1.rows[Pile] - 1;
 }
 
 void NumberOfSticksInRowI(int i) {
@@ -106,38 +119,41 @@ int getMove(char board[10], int player)
 	int move;
 	char move_str[80];
 
-	std::cout << "Where do you want to place your ";
-	char mark = (player == X_PLAYER) ? 'X' : 'O';
+	std::cout << "You are playing as the";
+										//	X		O
+	char mark = (player == X_PLAYER) ? 'server' : 'client';
 	std::cout << mark << "? " << std::endl;
 
 	do {
 		std::cout << "Your move? ";
 		std::cin >> move_str;
 		move = atoi(move_str);
-		if (board[move] == 'X' || board[move] == 'O') move = 0;
+		//if pile has no rocks
+		//if (board[move + 1] == 0) move = 0;
+		//if (board[move] == 'X' || board[move] == 'O') move = 0;
 	} while (move < 1 || move > 9);
 
 	return move;
 }
 
-int playTicTacToe(SOCKET s, std::string serverName, std::string host, std::string port, int player)
+int playNIM(SOCKET s, std::string serverName, std::string host, std::string port, int player)
 {
 	// This function plays the game and returns the value: winner.  This value 
 	// will be one of the following values: noWinner, xWinner, oWinner, TIE, ABORT
 	int winner = noWinner;
-	char board[10];
+	char boardNIM[10];
 	int opponent;
 	int move;
 	bool myMove;
 
-	if (player == X_PLAYER) {
-		std::cout << "Playing as X" << std::endl;
-		opponent = O_PLAYER;
+	if (player == Serv_PLAYER) {
+		std::cout << "Playing as Host" << std::endl;
+		opponent = Client_PLAYER;
 		myMove = true;
 	}
 	else {
-		std::cout << "Playing as O" << std::endl;
-		opponent = X_PLAYER;
+		std::cout << "Playing as Client" << std::endl;
+		opponent = Serv_PLAYER;
 		myMove = false;
 	}
 
@@ -154,15 +170,15 @@ int playTicTacToe(SOCKET s, std::string serverName, std::string host, std::strin
 
 			// Send move to opponent
 /*****
-	Task 1:	move is an integer that was assigned a value (from 1 to 9) in the 
-			previous code segment. Add code here to convert move to a null-terminated 
-			C-string and send it to your opponent. 
+	Task 1:	move is an integer that was assigned a value (from 1 to 9) in the
+			previous code segment. Add code here to convert move to a null-terminated
+			C-string and send it to your opponent.
 *****/
-			
-			char movecstr[2] = "";
+
+			char movecstr[4] = "";
 			_itoa_s(move, movecstr, 10);
 
-			UDP_send(s, movecstr, strlen(movecstr)+1, (char*)host.c_str(), (char*)port.c_str());
+			UDP_send(s, movecstr, strlen(movecstr) + 1, (char*)host.c_str(), (char*)port.c_str());
 
 		}
 		else {
@@ -170,25 +186,23 @@ int playTicTacToe(SOCKET s, std::string serverName, std::string host, std::strin
 			//Get opponent's move & display board
 			int status = wait(s, 20, 0);
 			if (status > 0) {
-/*****
-	Task 2:   (i) Insert code inside this IF statement that will accept a null-terminated
-				  C-string from your opponent that represents their move. Convert that
-				  string to an integer and then
-*****/
-			char movecstr[2] = "";
-			UDP_recv(s, movecstr, MAX_RECV_BUF, (char*)host.c_str(), (char*)port.c_str());
-			move = atoi(movecstr);
+				
+				char movecstr[4] = "";
+				UDP_recv(s, movecstr, MAX_RECV_BUF, (char*)host.c_str(), (char*)port.c_str());
+				move = atoi(movecstr);
 
-/*****
-			 (ii) call a function that will update the game board (see above) using your
-				  opponent's move, and
-*****/
-			updateBoard(board, move, player);
+				int pileNum;
+				int rockNum;
+				rockNum = move % 100;
+				pileNum = move / 100;
+				
 
-/*****
-			(iii) call a function that will display the updated board on your screen
-*****/
-			displayBoard(board);
+				updateBoard(pileNum, rockNum);
+
+				/*****
+							(iii) call a function that will display the updated board on your screen
+				*****/
+				displayBoard(board);
 
 
 			}
