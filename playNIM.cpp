@@ -13,48 +13,47 @@ int convertToNum(char Uno, char Dos) {
 }
 
 //Validate Request Data coming in
-int ValidateData(amountToRemove) {
-	if (NimBoard1.rows[Pile] < amountToRemove) {
-		amountToRemove = NimBoard1.rows[Pile];
+int ValidateData(NimBoard board, int amountToRemove, int pileNum) {
+	int winner = noWinner;
+
+	if (board.boardRows[pileNum] < amountToRemove) {
+		winner = player;
 	}
-	if (NimBoard1.rows[Pile] < 1) {
-		amountToRemove = 1;
+	if (board.boardRows[pileNum] < 1) {
+		winner = player;
 	}
 
-	return amountToRemove;
+	return winner;
 }
 
 //String that comes thru
 void initializeBoard(char boardDetails)
 {
-	char rowInfo = boardDetails.charAt(0);
-	//Minus 1 because we are going to shift one right and ignore it (row count)
-	for (int i = 0; i <= boardDetails.length() - 1; i++) {
-		NimBoard1.rowCount[i] = boardDetails.charAt(i + 1);
-	}
+	cout << str.at(5);
+	int board[];
 }
-//Done J.A. (Untested)
 
 //Update with the values of the board
-void updateBoard(int Pile, int amountToRemove)
+int updateBoard(NimBoard board, int Pile, int amountToRemove)
 {
-	amountToRemove = ValidateData(amountToRemove);
-	NimBoard1.rows[Pile] = NimBoard1.rows[Pile] - 1;
+	int winner = noWinner;
+	winner = ValidateData(board, amountToRemove, Pile);
+	board.boardRows[Pile] = board.boardRows[Pile] - amountToRemove;
+	return winner;
 }
 
 void NumberOfSticksInRowI(int i) {
-	return NimBoard1.rowCount[i];
+	return sticks[HOWEVER YOU GET IT];
 }
-//Done J.A. (Untested)
 
 void displayBoard(int NumberOfRows)
 {
 	std::cout << std::endl;
 	//Load the number of rows out
 	for (int i = 0; i <= NumberOfRows; i++) {
-  		//Load row
+		//Load row
 		std::cout << "Row " << i << ": ";
-		
+
 		for (int i = 0; i <= NumberOfSticksInRowI(i); i++) {
 			//Number of sticks in the row
 			cout << " | ";
@@ -65,7 +64,7 @@ void displayBoard(int NumberOfRows)
 
 	std::cout << std::endl;
 }
-//Done J.A. (Untested)
+
 
 
 int check4Win(char board[10])
@@ -114,13 +113,15 @@ int check4Win(char board[10])
 	return winner;
 }
 
+
+
 int getMove(char board[10], int player)
 {
 	int move;
 	char move_str[80];
 
 	std::cout << "You are playing as the";
-										//	X		O
+	//	X		O
 	char mark = (player == X_PLAYER) ? 'server' : 'client';
 	std::cout << mark << "? " << std::endl;
 
@@ -141,7 +142,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 	// This function plays the game and returns the value: winner.  This value 
 	// will be one of the following values: noWinner, xWinner, oWinner, TIE, ABORT
 	int winner = noWinner;
-	char boardNIM[10];
+	NimBoard board;
 	int opponent;
 	int move;
 	bool myMove;
@@ -165,7 +166,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 			// Get my move & display board
 			move = getMove(board, player);
 			std::cout << "Board after your move:" << std::endl;
-			updateBoard(board, move, player);
+			winner = updateBoard(board, move, player);
 			displayBoard(board);
 
 			// Send move to opponent
@@ -184,9 +185,9 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 		else {
 			std::cout << "Waiting for your opponent's move..." << std::endl << std::endl;
 			//Get opponent's move & display board
-			int status = wait(s, 20, 0);
+			int status = wait(s, 120, 0);
 			if (status > 0) {
-				
+
 				char movecstr[4] = "";
 				UDP_recv(s, movecstr, MAX_RECV_BUF, (char*)host.c_str(), (char*)port.c_str());
 				move = atoi(movecstr);
@@ -195,9 +196,9 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 				int rockNum;
 				rockNum = move % 100;
 				pileNum = move / 100;
-				
 
-				updateBoard(pileNum, rockNum);
+
+				winner = updateBoard(board, pileNum, rockNum);
 
 				/*****
 							(iii) call a function that will display the updated board on your screen
