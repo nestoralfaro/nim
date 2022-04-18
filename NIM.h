@@ -34,6 +34,11 @@ struct NimBoard {
 	int boardRows[rowCount];
 }
 
+struct Move {
+	int pile;
+	int amountToRemove;
+}
+
 SOCKET connectsock(char*, char*, char*);
 SOCKET passivesock(char*, char*);
 int UDP_recv(SOCKET, char*, int, char*, char*);
@@ -45,4 +50,3 @@ int server_main(int, char* [], std::string);
 int client_main(int, char* [], std::string);
 void getServers(SOCKET, char*, char*, ServerStruct[], int&);
 int playNIM(SOCKET, std::string, std::string, std::string, int);
-

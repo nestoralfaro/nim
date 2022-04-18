@@ -34,11 +34,11 @@ void initializeBoard(char boardDetails)
 }
 
 //Update with the values of the board
-int updateBoard(NimBoard board, int Pile, int amountToRemove, int player)
+int updateBoard(NimBoard board, Move move, int player)
 {
 	int winner = noWinner;
-	winner = ValidateData(board, amountToRemove, Pile, player);
-	board.boardRows[Pile] = board.boardRows[Pile] - amountToRemove;
+	winner = ValidateData(board, move.amountToRemove, move.pile, player);
+	board.boardRows[move.pile] = board.boardRows[move.pile] - move.amountToRemove;
 	return winner;
 }
 
@@ -115,11 +115,13 @@ int check4Win(char board[10])
 
 
 
-int getMove(char board[10], int player)
+Move getMove(NimBoard board, int player)
 {
 	int move;
 	char move_str[80];
-
+	int pile;
+	int amountToRemove;
+	std::string rocksToRemove;
 	std::cout << "You are playing as the";
 	//	X		O
 	char mark = (player == X_PLAYER) ? 'server' : 'client';
@@ -128,13 +130,13 @@ int getMove(char board[10], int player)
 	do {
 		std::cout << "Your move? ";
 		std::cin >> move_str;
-		move = atoi(move_str);
+		rocksToRemove = move_str[1] + move_str[2];
+		pile = atoi(move_str[0]);
+		amountToRemove = atoi(rocksToRemove);
 		//if pile has no rocks
-		//if (board[move + 1] == 0) move = 0;
-		//if (board[move] == 'X' || board[move] == 'O') move = 0;
-	} while (move < 1 || move > 9);
+	} while (board.boardRows[pile] == 0);
 
-	return move;
+	return {pile, amountToRemove};
 }
 
 int playNIM(SOCKET s, std::string serverName, std::string host, std::string port, int player)
@@ -144,7 +146,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 	int winner = noWinner;
 	NimBoard board;
 	int opponent;
-	int move;
+	Move move;
 	bool myMove;
 
 	if (player == Serv_PLAYER) {
