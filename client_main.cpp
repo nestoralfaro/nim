@@ -70,7 +70,7 @@ int client_main(int argc, char* argv[], std::string playerName)
 			int len = UDP_send(s, buf, strlen(buf) + 1, (char*)host.c_str(), (char*)port.c_str());
 
 			// Play the game.  You are the 'X' player
-			int winner = playNIM(s, serverName, host, port, X_PLAYER);
+			int winner = playNIM(s, serverName, host, port, Serv_PLAYER);
 		}
 	}
 
