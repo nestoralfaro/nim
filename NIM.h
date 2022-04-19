@@ -63,7 +63,7 @@ public:
 };
 
 struct Move {
-	std::string move;
+	std::string moveString;
 	int pile;
 	int amountToRemove;
 };
