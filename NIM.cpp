@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 	WSADATA wsaData;
 	int iResult = WSAStartup(wVersion, &wsaData);
 	if (iResult != 0) {
-		std::cout << "Unable to initialize Windows Socket library." << std::endl;
+		std::cout << "Unable to initialize Windows Socket library. (from NIM.cpp)" << std::endl;
 		return 0;
 	}
 	std::string playerName;
