@@ -105,9 +105,20 @@ public:
 		return this->piles;
 	}
 
+	//This function needs to be ran when we get there move to know if they won and after our move to know if we won
 	int check4win() {
 		std::cout << "checking for win" << std::endl;
 		/* Need to work here */
+		int total = 0;
+		for (int i = 0; i < this->piles.size(); i++) {
+			total = total + this->piles[i];
+		}
+
+		if (total == 0) {
+			std::cout << "We have a winner!!!" << std::endl;
+			return 1;
+		}
+
 		return noWinner;
 	}
 };
