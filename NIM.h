@@ -4,6 +4,7 @@
 // This header file establishes some constants that should be used
 // in the NIM project for COMP 3110
 #include <WinSock2.h>
+#include <vector>
 #include <string>
 
 static char NIM_UDPPORT[] = "29333";	// Port number used by NIM servers
@@ -29,15 +30,43 @@ struct ServerStruct {
 	std::string port;
 };
 
-struct NimBoard {
-	int rowCount;
-	int boardRows[rowCount];
-}
+//struct NimBoard {
+//	int rowCount;
+//	//int boardRows[rowCount];
+//	std::vector<int> boardRows(rowCount, 0);
+//}
+
+class NimBoard {
+	std::vector<int> board;
+	int piles;
+public:
+	NimBoard() : piles { 0 } {};
+	void setBoard(std::string pilesConf) {
+		this->piles = pilesConf[0] - '0';
+		//board(this->piles, 0);
+		//for (int pile = 0; pile < board.size(); ++pile) {
+		//	board[pile] = atoi((const char*)(piles[pile + 1] + piles[pile + 2]));
+		//}
+		for (int c = 1; c <= pilesConf.size() - 2; c += 2) {
+			//board.push_back(atoi((const char*)(piles[c] + piles[c + 1])));
+			board.push_back((pilesConf[c] - '0') * 10 + (pilesConf[c + 1] - '0'));
+		}
+	}
+
+	std::vector<int> getBoard() {
+		return this->board;
+	}
+
+	int getPiles() {
+		return this->piles;
+	}
+};
 
 struct Move {
+	std::string move;
 	int pile;
 	int amountToRemove;
-}
+};
 
 SOCKET connectsock(char*, char*, char*);
 SOCKET passivesock(char*, char*);

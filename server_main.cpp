@@ -38,7 +38,7 @@ int server_main(int argc, char* argv[], std::string playerName)
 			}
 
 			// Play the game.  You are the 'O' player
-			int winner = playNIM(s, (char*)playerName.c_str(), (char*)host.c_str(), (char*)port.c_str(), O_PLAYER);
+			int winner = playNIM(s, (char*)playerName.c_str(), (char*)host.c_str(), (char*)port.c_str(), Client_PLAYER);
 			finished = true;
 		}
 

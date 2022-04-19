@@ -4,8 +4,8 @@
 
 #include "NIM.h"
 #include <iostream>
-#include <string>
 #include <WinSock2.h>
+#include <vector>
 
 #pragma comment (lib, "ws2_32.lib")
 
@@ -32,9 +32,10 @@ int main(int argc, char* argv[])
 	char newline;
 	int choice = 0;
 	const int QUIT = 3;
+
 	do {
 		std::cout << std::endl << std::endl << std::endl;
-		std::cout << "Choose an option:" << std::endl;
+		std::cout << "Choose an option (1,2,3):" << std::endl;
 		std::cout << "   1 - Host a game of Nim" << std::endl;
 		std::cout << "   2 - Challenge someone else" << std::endl;
 		std::cout << "   3 - Quit" << std::endl;
@@ -44,7 +45,7 @@ int main(int argc, char* argv[])
 
 		switch (choice) {
 		case 1:	server_main(argc, argv, playerName); break;
-		case 2:	client_main(argc, argv, playerName); break;
+		case 2: client_main(argc, argv, playerName); break;
 		case 3: break;
 		default: std::cout << std::endl << "Please enter a digit between 1 and 3." << std::endl;
 		}
