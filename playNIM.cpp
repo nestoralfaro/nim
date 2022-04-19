@@ -132,8 +132,8 @@ Move getMove(NimBoard board, int player)
 	std::string rocksToRemove;
 	std::cout << "You are playing as the";
 	//	X		O
-	std::string mark = (player == Client_PLAYER) ? "server" : "client";
-	std::cout << mark << "? " << std::endl;
+	std::string mark = (player == Client_PLAYER) ? "client" : "server";
+	std::cout << mark << std::endl;
 
 	do {
 		std::cout << "Your move? ";
