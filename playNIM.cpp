@@ -129,7 +129,7 @@ Move getMove(NimBoard board, int player)
 	std::string move_str;
 	int pile;
 	int amountToRemove;
-	std::string rocksToRemove;
+	//std::string rocksToRemove;
 	std::cout << "You are playing as the";
 	//	X		O
 	std::string mark = (player == Client_PLAYER) ? "client" : "server";
@@ -138,9 +138,10 @@ Move getMove(NimBoard board, int player)
 	do {
 		std::cout << "Your move? ";
 		std::cin >> move_str;
-		rocksToRemove = move_str[1] + move_str[2];
+		//rocksToRemove = move_str[1] + move_str[2];
 		pile = (move_str[0] - '0');
-		amountToRemove = atoi(rocksToRemove.c_str());
+		//amountToRemove = atoi(rocksToRemove.c_str());
+		amountToRemove = (move_str[1] - '0') * 10 + (move_str[2] - '0');
 		//if pile has no rocks
 	} while (board.getBoard()[pile] == 0);
 
@@ -197,7 +198,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 			//_itoa_s(move, movecstr, 10);
 
 			//UDP_send(s, movecstr, strlen(movecstr) + 1, (char*)host.c_str(), (char*)port.c_str());
-			UDP_send(s, (char*)move.move.c_str(), strlen(move.move.c_str()) + 1, (char*)host.c_str(), (char*)port.c_str());
+			UDP_send(s, (char*)move.moveString.c_str(), strlen(move.moveString.c_str()) + 1, (char*)host.c_str(), (char*)port.c_str());
 
 		}
 		else {
