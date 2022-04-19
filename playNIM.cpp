@@ -138,12 +138,10 @@ Move getMove(NimBoard board, int player)
 	do {
 		std::cout << "Your move? ";
 		std::cin >> move_str;
-		//rocksToRemove = move_str[1] + move_str[2];
 		pile = (move_str[0] - '0');
-		//amountToRemove = atoi(rocksToRemove.c_str());
 		amountToRemove = (move_str[1] - '0') * 10 + (move_str[2] - '0');
 		//if pile has no rocks
-	} while (board.getBoard()[pile] == 0);
+	} while (board.getBoard()[pile - 1] == 0);
 
 	return {move_str, pile, amountToRemove};
 }
@@ -158,6 +156,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 	NimBoard board;
 	Move move;
 	bool myMove;
+	bool boardIsConfigured;
 	std::string boardConfig;
 	char newline;
 
@@ -168,77 +167,69 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 		std::cin.get(newline);
 		board.setBoard(boardConfig);
 		opponent = Client_PLAYER;
-		myMove = true;
+		myMove = false;
+		boardIsConfigured = true;
+		board.displayBoard();
+		UDP_send(s, (char*)boardConfig.c_str(), strlen(boardConfig.c_str()) + 1, (char*)host.c_str(), (char*)port.c_str());
 	}
 	else {
 		std::cout << "Playing as Client" << std::endl;
 		opponent = Serv_PLAYER;
-		myMove = false;
+		boardIsConfigured = false;
+		myMove = true;
 	}
 
-	//initializeBoard(board);
-	displayBoard(board);
-
 	while (winner == noWinner) {
-		if (myMove) {
-			// Get my move & display board
-			move = getMove(board, player);
-			std::cout << "Board after your move:" << std::endl;
-			winner = updateBoard(board, move, player); // Not yet compatible with the updateBoard funciton
-			displayBoard(board);
 
-			// Send move to opponent
-/*****
-	Task 1:	move is an integer that was assigned a value (from 1 to 9) in the
-			previous code segment. Add code here to convert move to a null-terminated
-			C-string and send it to your opponent.
-*****/
-
-			//char movecstr[4] = "";
-			//_itoa_s(move, movecstr, 10);
-
-			//UDP_send(s, movecstr, strlen(movecstr) + 1, (char*)host.c_str(), (char*)port.c_str());
-			UDP_send(s, (char*)move.moveString.c_str(), strlen(move.moveString.c_str()) + 1, (char*)host.c_str(), (char*)port.c_str());
-
+		if (boardIsConfigured) {
+			if (myMove) {
+				move = board.getMove(player);
+				std::cout << "Board after your move:" << std::endl;
+				board.updateBoard(move.pile, move.amountToRemove);
+				board.displayBoard();
+				UDP_send(s, (char*)move.moveString.c_str(), strlen(move.moveString.c_str()) + 1, (char*)host.c_str(), (char*)port.c_str());
+			}
+			else {
+				std::cout << "Waiting for your opponent's move..." << std::endl << std::endl;
+				//Get opponent's move & display board
+				int status = wait(s, 120, 0);
+				if (status > 0) {
+					char movecstr[4];
+					UDP_recv(s, movecstr, MAX_RECV_BUF, (char*)host.c_str(), (char*)port.c_str());
+					board.updateBoard(movecstr);
+					std::cout << "Board after your opponent's move" << std::endl;
+					board.displayBoard();
+				}
+				else {
+					winner = ABORT;
+				}
+			}
 		}
 		else {
-			std::cout << "Waiting for your opponent's move..." << std::endl << std::endl;
-			//Get opponent's move & display board
+			std::cout << "Waiting for board configuration..." << std::endl << std::endl;
 			int status = wait(s, 120, 0);
 			if (status > 0) {
-
-				char movecstr[4] = "";
-				UDP_recv(s, movecstr, MAX_RECV_BUF, (char*)host.c_str(), (char*)port.c_str());
-				//move = atoi(movecstr);
-
-				//int pileNum;
-				//int rockNum;
-				//rockNum = move % 100;
-				//pileNum = move / 100;
-
-
-				//winner = updateBoard(board, pileNum, rockNum, player);
-				move = getMove(board, player);
-				winner = updateBoard(board, move, player);
-
-				/*****
-							(iii) call a function that will display the updated board on your screen
-				*****/
-				displayBoard(board);
-
-
+				myMove = false;
+				boardIsConfigured = true;
+				char boardConf[80];
+				UDP_recv(s, boardConf, MAX_RECV_BUF, (char*)host.c_str(), (char*)port.c_str());
+				board.setBoard(boardConf);
+				board.displayBoard();
 			}
 			else {
 				winner = ABORT;
 			}
+
 		}
+
 		myMove = !myMove;
+		//boardIsConfigured = !boardIsConfigured;
 
 		if (winner == ABORT) {
 			std::cout << "No response from opponent.  Aborting the game..." << std::endl;
 		}
 		else {
-			winner = check4Win(board.getBoard());
+			winner = board.check4win();
 		}
 
 		if (winner == player)
