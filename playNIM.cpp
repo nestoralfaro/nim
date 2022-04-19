@@ -48,9 +48,10 @@ int updateBoard(NimBoard board, Move move, int player)
 
 void displayBoard(NimBoard board)
 {
+	int row = 1;
 	std::cout << std::endl;
 	for (const auto& pile : board.getBoard()) {
-		std::cout << "Row " << pile << ": ";
+		std::cout << "Row " << row++ << ": ";
 
 		for (int rock = 0; rock < pile; ++rock) {
 			std::cout << " | ";
