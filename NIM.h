@@ -138,16 +138,15 @@ public:
 
 	//This function needs to be ran when we get there move to know if they won and after our move to know if we won
 	int check4win() {
-		std::cout << "checking for win" << std::endl;
+		//std::cout << "checking for win" << std::endl;
 		/* Need to work here */
-		//adding a comment
 		int total = 0;
 		for (std::size_t i = 0; i < this->board.size(); i++) {
 			total = total + this->board[i];
 		}
 
 		if (total == 0) {
-			std::cout << "We have a winner!!!" << std::endl;
+			//std::cout << "We have a winner!!!" << std::endl;
 			return 1;
 		}
 
