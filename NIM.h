@@ -75,7 +75,9 @@ public:
 
 	Move getMove(const int player) {
 		int move;
+		std::string inputOne;
 		std::string move_str;
+		std::string comment = "";
 		int pile;
 		int amountToRemove;
 		//std::string rocksToRemove;
@@ -84,15 +86,38 @@ public:
 		std::string mark = (player == Client_PLAYER) ? "client" : "server";
 		std::cout << mark << std::endl;
 
-		do {
-			std::cout << "Your move? ";
-			std::cin >> move_str;
-			pile = (move_str[0] - '0');
+		do {	
+			inputOne = "invalid";
+			while(inputOne == "C"||inputOne=="invalid"){
+				std::cout << "Please input a number 1-" << /*Number of total piles*/ << " to select a pile to remove from, The letter 'C' to send a comment, or the letter 'F' to forfeit";
+				std::cin >> inputOne;
+				if (inputOne == "C"){
+					cout << "Please type the comment you would like to send.";
+					while(strlen(comment) > 80){
+					std::getline(std::cin, comment);
+					if(strlen(comment)>80){
+						cout << "Your comment was too long, please send something shorter.";
+					}
+				return /*Variable*/{inputOne, comment);
+				}
+				else if (inputOne == "F"){
+					pile = "0";
+					amountToRemove = "00";
+				}
+				else if (/*logic to determine if its within the number limit*/){
+					/*logic to parse and send*/
+				}
+				else{
+					"Your input was invalid. Please try again, input a number 1-" << /*number of rocks in selected pile*/;
+					inputOne = "invalid"
+				}
+			}
+		/*	pile = (move_str[0] - '0');
 			amountToRemove = (move_str[1] - '0') * 10 + (move_str[2] - '0');
 			//if pile has no rocks
 		} while (this->board[pile - 1] == 0);
 
-		return Move{ move_str, pile, amountToRemove };
+		return Move{ move_str, pile, amountToRemove };*/
 	}
 
 	void updateBoard(std::string move) {
