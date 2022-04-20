@@ -186,10 +186,22 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 		if (boardIsConfigured) {
 			if (myMove) {
 				move = board.getMove(player);
-				std::cout << "Board after your move:" << std::endl;
-				board.updateBoard(move.pile, move.amountToRemove);
-				board.displayBoard();
-				UDP_send(s, (char*)move.moveString.c_str(), strlen(move.moveString.c_str()) + 1, (char*)host.c_str(), (char*)port.c_str());
+				while (move.moveString[0] == 'C') {
+					UDP_send(s, (char*)move.moveString.c_str(), strlen(move.moveString.c_str()) + 1, (char*)host.c_str(), (char*)port.c_str());
+					move = board.getMove(player);
+				}
+				if (move.moveString == "F") {
+					UDP_send(s, (char*)move.moveString.c_str(), strlen(move.moveString.c_str()) + 1, (char*)host.c_str(), (char*)port.c_str());
+					winner = opponent;
+					std::cout << "You forfeited!!" << std::endl;
+				}
+				else {
+					std::cout << "Board after your move:" << std::endl;
+					board.updateBoard(move.pile, move.amountToRemove);
+					board.displayBoard();
+					UDP_send(s, (char*)move.moveString.c_str(), strlen(move.moveString.c_str()) + 1, (char*)host.c_str(), (char*)port.c_str());
+				}
+				
 			}
 			else {
 				std::cout << "Waiting for your opponent's move..." << std::endl << std::endl;
