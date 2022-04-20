@@ -88,7 +88,7 @@ public:
 
 		do {	
 			inputOne = "invalid";
-			while(inputOne == "C"||inputOne=="invalid"){
+			while(inputOne=="invalid"){
 				std::cout << "Please input a number 1-" << /*Number of total piles*/ << " to select a pile to remove from, The letter 'C' to send a comment, or the letter 'F' to forfeit";
 				std::cin >> inputOne;
 				if (inputOne == "C"){
