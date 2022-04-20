@@ -73,6 +73,11 @@ public:
 		std::cout << std::endl;
 	}
 
+
+	int getPiles() {
+		return this->piles;
+	}
+
 	Move getMove(const int player) {
 		int move;
 		std::string inputOne;
@@ -80,91 +85,49 @@ public:
 		std::string comment = "";
 		int pile;
 		int amountToRemove;
+		char newline;
 		Move returnMove;
-		//std::string rocksToRemove;
-		//std::cout << "You are playing as the ";
-		////	X		O
-		//std::string mark = (player == Client_PLAYER) ? "client" : "server";
-		//std::cout << mark << std::endl;
-
-<<<<<<< HEAD
-		//do {	
-			inputOne = "invalid";
-			while(inputOne=="invalid"){
-				std::cout << "Please input a number 1-" << this->board.getPiles() << " to select a pile to remove from, The letter 'C' to send a comment, or the letter 'F' to forfeit";
-				std::cin >> inputOne;
-				if (inputOne == "C" || inputOne == "c"){
-					std::cout << "Please type the comment you would like to send.";
+		inputOne = "invalid";
+		while(inputOne=="invalid") {
+			std::cout << "Please input a number 1-" << this->getPiles() << " to select a pile to remove from, The letter 'C' to send a comment, or the letter 'F' to forfeit" << std::endl;
+			std::cin >> inputOne;
+			std::cin.get(newline);
+			if (inputOne[0] == 'C' || inputOne[0] == 'c') {
+				std::cout << "Please type the comment you would like to send.";
+				std::getline(std::cin, comment);
+				while (comment.length() > 80) {
+					std::cout << "Your comment was too long, please send something shorter.";
 					std::getline(std::cin, comment);
-					while (comment.length() > 80) {
-						std::cout << "Your comment was too long, please send something shorter.";
-						std::getline(std::cin, comment);
-					}
-					returnMove.moveString = 'C' + comment;
-					return returnMove;
 				}
-				else if (inputOne == "F"){
-					returnMove.moveString = "F";
-					return returnMove;
-				}
-				else if (inputOne >= "1" && inputOne <= board.getPiles()
-				}
-				else{
-					"Your input was invalid. Please try again, input a number 1-" << /*number of rocks in selected pile*/;
-					inputOne = "invalid"
-				}
+				returnMove.moveString = 'C' + comment;
+				return returnMove;
 			}
-		/*	pile = (move_str[0] - '0');
-=======
-		do {
-
-			std::cout << "Your move? ";
-			std::cin >> move_str;
-			pile = (move_str[0] - '0');
-			//inputOne = "invalid";
-			//while(inputOne=="invalid"){
-			//	std::cout << "Please input a number 1-" << /*Number of total piles*/ << " to select a pile to remove from, The letter 'C' to send a comment, or the letter 'F' to forfeit";
-			//	std::cin >> inputOne;
-			//	if (inputOne == "C"){
-			//		cout << "Please type the comment you would like to send.";
-			//		while(strlen(comment) > 80){
-			//		std::getline(std::cin, comment);
-			//		if(strlen(comment)>80){
-			//			cout << "Your comment was too long, please send something shorter.";
-			//		}
-			//		return /*Variable*/{ inputOne, comment);
-			//	}
-			//	}
-			//	else if (inputOne == "F"){
-			//		pile = "0";
-			//		amountToRemove = "00";
-			//	}
-			//	else if (/*logic to determine if its within the number limit*/){
-			//		/*logic to parse and send*/
-			//	}
-			//	else{
-			//		"Your input was invalid. Please try again, input a number 1-" << /*number of rocks in selected pile*/;
-			//		inputOne = "invalid"
-			//	}
-			//}
-
-			pile = (move_str[0] - '0');
->>>>>>> c10c73cdf9fd556218574d04e4ce95c375115b18
-			amountToRemove = (move_str[1] - '0') * 10 + (move_str[2] - '0');
-			//if pile has no rocks
-		} while (this->board[pile - 1] == 0);
-
-		return Move{ move_str, pile, amountToRemove };
+			else if (inputOne[0] == 'F' || inputOne[0] == 'f') {
+				returnMove.moveString = "F";
+				return returnMove;
+			}
+			else if ((inputOne[0] - '0') >= 1 && (inputOne[0] - '0') <= this->getPiles()) {
+				std::string rocks;
+				char newline;
+				pile = inputOne[0] - '0';
+				std::cout << "Now enter how many rocks to remove ";
+				std::cin >> rocks;
+				std::cin.get(newline);
+				inputOne += rocks;
+				amountToRemove = (rocks[0] - '0') * 10 + (rocks[1] - '0');
+				return Move{ inputOne, pile, amountToRemove };
+			}
+			else{
+				std::cout << "Your input was invalid. Please try again, input a number 1-" << this->getPiles();
+				inputOne = "invalid";
+			}
+		}
 	}
 
 	void updateBoard(std::string move) {
 		int pile = (move[0] - '0');
 		int amountToRemove = (move[1] - '0') * 10 + (move[2] - '0');
 		this->updateBoard(pile, amountToRemove);
-	}
-
-	int getPiles() {
-		return this->piles;
 	}
 
 	//This function needs to be ran when we get there move to know if they won and after our move to know if we won
