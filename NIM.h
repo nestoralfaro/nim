@@ -41,7 +41,7 @@ class NimBoard {
 	std::vector<int> board;
 	int piles;
 public:
-	NimBoard() : piles { 0 } {};
+	NimBoard() : piles{ 0 } {};
 	void setBoard(std::string pilesConf) {
 		this->piles = pilesConf[0] - '0';
 		for (int c = 1; c <= pilesConf.size() - 2; c += 2) {
@@ -86,38 +86,44 @@ public:
 		std::string mark = (player == Client_PLAYER) ? "client" : "server";
 		std::cout << mark << std::endl;
 
-		do {	
-			inputOne = "invalid";
-			while(inputOne=="invalid"){
-				std::cout << "Please input a number 1-" << /*Number of total piles*/ << " to select a pile to remove from, The letter 'C' to send a comment, or the letter 'F' to forfeit";
-				std::cin >> inputOne;
-				if (inputOne == "C"){
-					cout << "Please type the comment you would like to send.";
-					while(strlen(comment) > 80){
-					std::getline(std::cin, comment);
-					if(strlen(comment)>80){
-						cout << "Your comment was too long, please send something shorter.";
-					}
-				return /*Variable*/{inputOne, comment);
-				}
-				else if (inputOne == "F"){
-					pile = "0";
-					amountToRemove = "00";
-				}
-				else if (/*logic to determine if its within the number limit*/){
-					/*logic to parse and send*/
-				}
-				else{
-					"Your input was invalid. Please try again, input a number 1-" << /*number of rocks in selected pile*/;
-					inputOne = "invalid"
-				}
-			}
-		/*	pile = (move_str[0] - '0');
+		do {
+
+			std::cout << "Your move? ";
+			std::cin >> move_str;
+			pile = (move_str[0] - '0');
+			//inputOne = "invalid";
+			//while(inputOne=="invalid"){
+			//	std::cout << "Please input a number 1-" << /*Number of total piles*/ << " to select a pile to remove from, The letter 'C' to send a comment, or the letter 'F' to forfeit";
+			//	std::cin >> inputOne;
+			//	if (inputOne == "C"){
+			//		cout << "Please type the comment you would like to send.";
+			//		while(strlen(comment) > 80){
+			//		std::getline(std::cin, comment);
+			//		if(strlen(comment)>80){
+			//			cout << "Your comment was too long, please send something shorter.";
+			//		}
+			//		return /*Variable*/{ inputOne, comment);
+			//	}
+			//	}
+			//	else if (inputOne == "F"){
+			//		pile = "0";
+			//		amountToRemove = "00";
+			//	}
+			//	else if (/*logic to determine if its within the number limit*/){
+			//		/*logic to parse and send*/
+			//	}
+			//	else{
+			//		"Your input was invalid. Please try again, input a number 1-" << /*number of rocks in selected pile*/;
+			//		inputOne = "invalid"
+			//	}
+			//}
+
+			pile = (move_str[0] - '0');
 			amountToRemove = (move_str[1] - '0') * 10 + (move_str[2] - '0');
 			//if pile has no rocks
 		} while (this->board[pile - 1] == 0);
 
-		return Move{ move_str, pile, amountToRemove };*/
+		return Move{ move_str, pile, amountToRemove };
 	}
 
 	void updateBoard(std::string move) {
@@ -134,9 +140,10 @@ public:
 	int check4win() {
 		std::cout << "checking for win" << std::endl;
 		/* Need to work here */
+		//adding a comment
 		int total = 0;
-		for (int i = 0; i < this->piles.size(); i++) {
-			total = total + this->piles[i];
+		for (std::size_t i = 0; i < this->board.size(); i++) {
+			total = total + this->board[i];
 		}
 
 		if (total == 0) {
