@@ -114,8 +114,8 @@ public:
 				std::cin >> rocks;
 				std::cin.get(newline);
 				amountToRemove = (rocks[0] - '0') * 10 + (rocks[1] - '0');
-				while (this->getBoard()[pile] < amountToRemove || amountToRemove <= 0) {
-					std::cout << "Invalid number of rocks. Please enter a number between 01 and " << this->getBoard()[pile] << std::endl;
+				while (this->getBoard()[pile - 1] < amountToRemove || amountToRemove <= 0) {
+					std::cout << "Invalid number of rocks. Please enter a number between 1 and " << this->getBoard()[pile - 1] << std::endl;
 					std::cin >> rocks;
 					std::cin.get(newline);
 					amountToRemove = (rocks[0] - '0') * 10 + (rocks[1] - '0');
