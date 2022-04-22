@@ -113,8 +113,14 @@ public:
 				std::cout << "Now enter how many rocks to remove ";
 				std::cin >> rocks;
 				std::cin.get(newline);
-				inputOne += rocks;
 				amountToRemove = (rocks[0] - '0') * 10 + (rocks[1] - '0');
+				while (this->getBoard()[pile] < amountToRemove || amountToRemove <= 0) {
+					std::cout << "Invalid number of rocks. Please enter a number between 01 and " << this->getBoard()[pile] << std::endl;
+					std::cin >> rocks;
+					std::cin.get(newline);
+					amountToRemove = (rocks[0] - '0') * 10 + (rocks[1] - '0');
+				}
+				inputOne += rocks;
 				return Move{ inputOne, pile, amountToRemove };
 			}
 			else{
