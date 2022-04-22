@@ -37,13 +37,36 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 	Move move;
 	bool myMove;
 	bool boardIsConfigured;
-	std::string boardConfig;
+	std::string boardConfig="";
 	char newline;
 
 	if (player == Serv_PLAYER) {
 		std::cout << "Playing as Host" << std::endl;
-		std::cout << "Please enter initial pile configuration (# of Piles (2 digits) # of rocks for each pile (2 digits each)" << std::endl;
-		std::cin >> boardConfig;
+		std::cout << "Please enter the number of piles you'd like to play with, 3-9" << std::endl;
+		std::string PileNum = "";
+		std::cin >> PileNum;
+		while ((PileNum[0] - '0') > 9 || (PileNum[0] - '0') < 3 || PileNum[1] != NULL){
+			PileNum = "";
+			std::cout << "The number you've input is invalid, please try again with a number 3-9" << std::endl;
+			std::cin >> PileNum;
+		}
+		boardConfig+=PileNum;
+		for (int i=0; i<PileNum; i++){
+			std::cout << "Please choose how many rocks, 1-20 you would like in pile " << i+1 << std::endl;
+			std::string RockNum = "";
+			std::cin >> RockNum;
+			if (RockNum[1] == Null){
+				RockNum = '0' + RockNum;
+			while (((RockNum[0] - '0') * 10 + (RockNum[1] - '0')) > 20 || ((RockNum[0] - '0') * 10 + (RockNum[1] - '0')) < 0 || RockNum[2] != NULL){
+				RockNum = "";
+				std::cout << "The number you've input is invalid, please try again with a number 1-20" << endl;
+				std::cin >> RockNum;
+				if (RockNum[1] == NULL){
+					RockNum = '0' + RockNum;
+				}
+			}
+			boardConfig += RockNum;
+		} 
 		std::cin.get(newline);
 		board.setBoard(boardConfig);
 		opponent = Client_PLAYER;
