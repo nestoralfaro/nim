@@ -42,7 +42,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 
 	if (player == Serv_PLAYER) {
 		std::cout << "Playing as Host" << std::endl;
-		std::cout << "Please enter initial pile configuration (# of Piles (1 digits) # of rocks for each pile (2 digits each)" << std::endl;
+		std::cout << "Please enter initial pile configuration (# of Piles (2 digits) # of rocks for each pile (2 digits each)" << std::endl;
 		std::cin >> boardConfig;
 		std::cin.get(newline);
 		board.setBoard(boardConfig);
@@ -108,7 +108,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 						winner = player;
 					}
 					else {
-						board.updateBoard(movecstr);
+						board.updateBoardOp(movecstr);
 						std::cout << "Board after your opponent's move" << std::endl;
 						board.displayBoard();
 					}
