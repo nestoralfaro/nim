@@ -107,11 +107,14 @@ public:
 				return returnMove;
 			}
 			else if ((inputOne[0] - '0') >= 1 && (inputOne[0] - '0') <= this->getPiles()) {
-				std::string rocks;
+				std::string rocks = '';
 				char newline;
 				pile = inputOne[0] - '0';
 				std::cout << "Now enter how many rocks to remove ";
 				std::cin >> rocks;
+				if (rocks[1] ==NULL){
+				rocks = '0' + rocks;
+				};
 				std::cin.get(newline);
 				amountToRemove = (rocks[0] - '0') * 10 + (rocks[1] - '0');
 				while (this->getBoard()[pile - 1] < amountToRemove || amountToRemove <= 0) {
