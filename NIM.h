@@ -124,11 +124,11 @@ public:
 		}
 	}
 
-	/*void updateBoard(std::string move) {
+	void updateBoardOp(std::string move) {
 		int pile = (move[0] - '0');
 		int amountToRemove = (move[1] - '0') * 10 + (move[2] - '0');
 		this->updateBoard(pile, amountToRemove);
-	}*/
+	}
 
 	//This function needs to be ran when we get there move to know if they won and after our move to know if we won
 	int check4win() {
