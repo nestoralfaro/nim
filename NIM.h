@@ -68,6 +68,7 @@ public:
 			for (int rock = 0; rock < pile; ++rock) {
 				std::cout << " | ";
 			}
+			std::cout << std::endl;
 		}
 
 		std::cout << std::endl;
@@ -92,6 +93,8 @@ public:
 			std::cout << "Please input a number 1-" << this->getPiles() << " to select a pile to remove from, The letter 'C' to send a comment, or the letter 'F' to forfeit" << std::endl;
 			std::cin >> inputOne;
 			std::cin.get(newline);
+
+			//Handle a Comment
 			if (inputOne[0] == 'C' || inputOne[0] == 'c') {
 				std::cout << "Please type the comment you would like to send.";
 				std::getline(std::cin, comment);
@@ -102,32 +105,46 @@ public:
 				returnMove.moveString = 'C' + comment;
 				return returnMove;
 			}
+
+			//Handle a Forfiet
 			else if (inputOne[0] == 'F' || inputOne[0] == 'f') {
 				returnMove.moveString = "F";
 				return returnMove;
 			}
+
+			//Get a number of Piles
 			else if ((inputOne[0] - '0') >= 1 && (inputOne[0] - '0') <= this->getPiles()) {
-				std::string rocks = '';
+				std::string rocks = "";
 				char newline;
 				pile = inputOne[0] - '0';
-				std::cout << "Now enter how many rocks to remove ";
-				std::cin >> rocks;
-				if (rocks[1] ==NULL){
-				rocks = '0' + rocks;
-				};
-				std::cin.get(newline);
-				amountToRemove = (rocks[0] - '0') * 10 + (rocks[1] - '0');
-				while (this->getBoard()[pile - 1] < amountToRemove || amountToRemove <= 0) {
-					std::cout << "Invalid number of rocks. Please enter a number between 1 and " << this->getBoard()[pile - 1] << std::endl;
+				if (this->getBoard()[pile - 1] <= 0) {
+					std::cout << "This pile has no rocks! Please chose a different pile" << std::endl;
+					inputOne = "invalid";
+				}
+				else {
+					std::cout << "Now enter how many rocks to remove ";
 					std::cin >> rocks;
+					if (rocks[1] == NULL) {
+						rocks = '0' + rocks;
+					};
 					std::cin.get(newline);
 					amountToRemove = (rocks[0] - '0') * 10 + (rocks[1] - '0');
+					while (this->getBoard()[pile - 1] < amountToRemove || amountToRemove <= 0) {
+						std::cout << "Invalid number of rocks. Please enter a number between 1 and " << this->getBoard()[pile - 1] << std::endl;
+						std::cin >> rocks;
+						std::cin.get(newline);
+						if (rocks[1] == NULL) {
+							rocks = '0' + rocks;
+						};
+						amountToRemove = (rocks[0] - '0') * 10 + (rocks[1] - '0');
+						std::cout << amountToRemove;
+					}
+					inputOne += rocks;
+					return Move{ inputOne, pile, amountToRemove };
 				}
-				inputOne += rocks;
-				return Move{ inputOne, pile, amountToRemove };
 			}
 			else{
-				std::cout << "Your input was invalid. Please try again, input a number 1-" << this->getPiles();
+				std::cout << "Your input was invalid. Please try again, input a number 1-" << this->getPiles() << std::endl;
 				inputOne = "invalid";
 			}
 		}
