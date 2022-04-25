@@ -57,24 +57,26 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 			std::cin >> RockNum;
 			if (RockNum[1] == NULL) {
 				RockNum = '0' + RockNum;
-				while (((RockNum[0] - '0') * 10 + (RockNum[1] - '0')) > 20 || ((RockNum[0] - '0') * 10 + (RockNum[1] - '0')) < 0 || RockNum[2] != NULL) {
-					RockNum = "";
-					std::cout << "The number you've input is invalid, please try again with a number 1-20" << std::endl;
-					std::cin >> RockNum;
-					if (RockNum[1] == NULL) {
-						RockNum = '0' + RockNum;
-					}
-				}
-				boardConfig += RockNum;
 			}
-			std::cin.get(newline);
-			board.setBoard(boardConfig);
-			opponent = Client_PLAYER;
-			myMove = false;
-			boardIsConfigured = true;
-			board.displayBoard();
-			UDP_send(s, (char*)boardConfig.c_str(), strlen(boardConfig.c_str()) + 1, (char*)host.c_str(), (char*)port.c_str());
+			while (((RockNum[0] - '0') * 10 + (RockNum[1] - '0')) > 20 || ((RockNum[0] - '0') * 10 + (RockNum[1] - '0')) <= 0 || RockNum[2] != NULL) {
+				RockNum = "";
+				std::cout << "The number you've input is invalid, please try again with a number 1-20" << std::endl;
+				std::cin >> RockNum;
+				if (RockNum[1] == NULL) {
+					RockNum = '0' + RockNum;
+				}
+			}
+			boardConfig += RockNum;
+			
 		}
+		std::cin.get(newline);
+		board.setBoard(boardConfig);
+		opponent = Client_PLAYER;
+		myMove = false;
+		boardIsConfigured = true;
+		board.displayBoard();
+		UDP_send(s, (char*)boardConfig.c_str(), strlen(boardConfig.c_str()) + 1, (char*)host.c_str(), (char*)port.c_str());
+		
 	}
 	else {
 		std::cout << "Playing as Client" << std::endl;
@@ -178,4 +180,3 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 
 	return winner;
 }
-
