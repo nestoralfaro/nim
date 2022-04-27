@@ -115,10 +115,10 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 				if (status > 0) {
 					char movecstr[80];
 					UDP_recv(s, movecstr, MAX_RECV_BUF, (char*)host.c_str(), (char*)port.c_str());
-					while (mainHost != host) {
+					/*while (mainHost != host) {
 						status = wait(s, 120, 0);
 						UDP_recv(s, movecstr, MAX_RECV_BUF, (char*)host.c_str(), (char*)port.c_str());
-					}
+					}*/
 					if (movecstr[0] == 'C') {
 						std::cout << "Comment from your opponent: ";
 
