@@ -96,10 +96,10 @@ public:
 
 			//Handle a Comment
 			if (inputOne[0] == 'C' || inputOne[0] == 'c') {
-				std::cout << "Please type the comment you would like to send.";
+				std::cout << "Please type the comment you would like to send. ";
 				std::getline(std::cin, comment);
 				while (comment.length() > 80) {
-					std::cout << "Your comment was too long, please send something shorter.";
+					std::cout << "Your comment was too long, please send something shorter. ";
 					std::getline(std::cin, comment);
 				}
 				returnMove.moveString = 'C' + comment;
