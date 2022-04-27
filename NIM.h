@@ -89,7 +89,7 @@ public:
 		char newline;
 		Move returnMove;
 		inputOne = "invalid";
-		while(inputOne=="invalid") {
+		while (inputOne == "invalid") {
 			std::cout << "Please input a number 1-" << this->getPiles() << " to select a pile to remove from, The letter 'C' to send a comment, or the letter 'F' to forfeit" << std::endl;
 			std::cin >> inputOne;
 			std::cin.get(newline);
@@ -143,7 +143,7 @@ public:
 					return Move{ inputOne, pile, amountToRemove };
 				}
 			}
-			else{
+			else {
 				std::cout << "Your input was invalid. Please try again, input a number 1-" << this->getPiles() << std::endl;
 				inputOne = "invalid";
 			}
@@ -157,7 +157,7 @@ public:
 	}
 
 	//This function needs to be ran when we get there move to know if they won and after our move to know if we won
-	int check4win() {
+	int check4win(int player, int oponent, int myMove) {
 		//std::cout << "checking for win" << std::endl;
 		/* Need to work here */
 		int total = 0;
@@ -167,7 +167,12 @@ public:
 
 		if (total == 0) {
 			//std::cout << "We have a winner!!!" << std::endl;
-			return 1;
+			if (myMove) {
+				return player;
+			} 
+			else {
+				return oponent;
+			}
 		}
 
 		return noWinner;
