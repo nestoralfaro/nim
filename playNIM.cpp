@@ -176,7 +176,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 			std::cout << "No response from opponent.  Aborting the game..." << std::endl;
 		}
 		else {
-			if (winner == noWinner) winner = board.check4win();
+			if (winner == noWinner) winner = board.check4win(player, opponent, myMove);
 		}
 
 		if (winner == player)
