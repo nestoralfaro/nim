@@ -39,6 +39,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 	bool boardIsConfigured;
 	std::string boardConfig = "";
 	char newline;
+	std::string mainHost = host;
 
 	if (player == Serv_PLAYER) {
 		std::cout << "Playing as Host" << std::endl;
@@ -67,7 +68,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 				}
 			}
 			boardConfig += RockNum;
-			
+
 		}
 		std::cin.get(newline);
 		board.setBoard(boardConfig);
@@ -76,7 +77,7 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 		boardIsConfigured = true;
 		board.displayBoard();
 		UDP_send(s, (char*)boardConfig.c_str(), strlen(boardConfig.c_str()) + 1, (char*)host.c_str(), (char*)port.c_str());
-		
+
 	}
 	else {
 		std::cout << "Playing as Client" << std::endl;
@@ -114,6 +115,10 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 				if (status > 0) {
 					char movecstr[80];
 					UDP_recv(s, movecstr, MAX_RECV_BUF, (char*)host.c_str(), (char*)port.c_str());
+					while (mainHost != host) {
+						status = wait(s, 120, 0);
+						UDP_recv(s, movecstr, MAX_RECV_BUF, (char*)host.c_str(), (char*)port.c_str());
+					}
 					if (movecstr[0] == 'C') {
 						std::cout << "Comment from your opponent: ";
 
@@ -152,6 +157,10 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 				boardIsConfigured = true;
 				char boardConf[80];
 				UDP_recv(s, boardConf, MAX_RECV_BUF, (char*)host.c_str(), (char*)port.c_str());
+				/*while (mainHost != host) {
+					status = wait(s, 120, 0);
+					UDP_recv(s, boardConf, MAX_RECV_BUF, (char*)host.c_str(), (char*)port.c_str());
+				}*/
 				board.setBoard(boardConf);
 				board.displayBoard();
 			}
