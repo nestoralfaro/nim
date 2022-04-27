@@ -170,7 +170,6 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 
 		}
 
-		myMove = !myMove;
 
 		if (winner == ABORT) {
 			std::cout << "No response from opponent.  Aborting the game..." << std::endl;
@@ -183,6 +182,9 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 			std::cout << "You WIN!" << std::endl;
 		else if (winner == opponent)
 			std::cout << "I'm sorry.  You lost" << std::endl;
+
+
+		myMove = !myMove;
 	}
 
 	return winner;
