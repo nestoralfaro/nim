@@ -181,8 +181,6 @@ int playNIM(SOCKET s, std::string serverName, std::string host, std::string port
 
 		if (winner == player)
 			std::cout << "You WIN!" << std::endl;
-		else if (winner == TIE)
-			std::cout << "It's a tie." << std::endl;
 		else if (winner == opponent)
 			std::cout << "I'm sorry.  You lost" << std::endl;
 	}
